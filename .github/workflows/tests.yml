@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: puzl-ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -18,7 +18,7 @@ jobs:
           ruff format --check --diff .
           pyright
   test:
-    runs-on: ${{ matrix.os }}
+    runs-on: puzl-ubuntu-latest
     strategy:
       fail-fast: false
       matrix:

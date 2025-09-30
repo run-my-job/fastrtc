@@ -1,12 +1,5 @@
 name: docs
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
+on: push
 permissions:
   contents: write
   pull-requests: write
@@ -15,8 +8,9 @@ permissions:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
+    runs-on: puzl-ubuntu-latest
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && 
+      github.event.pull_request.head.repo.fork == false)
     steps:
       - uses: actions/checkout@v4
       - name: Configure Git Credentials
@@ -26,7 +20,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: 3.x
-      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
+      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
       - uses: actions/cache@v4
         with:
           key: mkdocs-material-${{ env.cache_id }}
